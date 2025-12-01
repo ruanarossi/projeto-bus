@@ -1,0 +1,798 @@
+/* ===== Aurora Transportes - Estilos Gerais ===== */
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Reset e Estilos Base */
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth; /* Adiciona rolagem suave */
+}
+body {
+  margin: 0;
+  background: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  font-family: "Poppins", sans-serif;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 70px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header img {
+  height: 130px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+nav {
+  display: flex;
+  gap: 2rem; /* Reduzido para aproximar os itens do menu */
+}
+
+nav a {
+  color: #fff;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+/* ===== Seções ===== */
+.hero {
+  position: relative;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Sobreposição escura */
+  z-index: 1;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: inherit;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.hero h1,
+.hero p {
+  z-index: 2; /* Garante que o texto fique sobre a sobreposição */
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.block-section {
+  padding: 60px 50px; /* Padding vertical e horizontal consistentes */
+  margin: 0px 0 90px; /* Adiciona espaçamento entre as seções */
+}
+
+.block-section h2 {
+  font-weight: 600;
+  font-style: normal;
+  font-size: 36px;
+  padding-bottom: 40px; /* Ajusta o espaçamento abaixo do título */
+  margin-bottom: 20px; /* Mantém uma margem inferior */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+/* ===== Cards ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  position: relative; /* Essencial para posicionar o conteúdo sobre a imagem */
+  /* overflow: hidden; */ /* Removido para permitir que a imagem "salte" para fora */
+  overflow: hidden; /* Reativado para conter a imagem, mas o hover a expandirá */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10; /* Garante que o card ativo fique sobre os outros */
+  position: relative; /* Necessário para o z-index funcionar corretamente no contexto de flexbox */
+}
+.card-image-container {
+  position: relative;
+  /* flex-grow: 1; */ /* Removido para dar espaço ao conteúdo */
+  height: 100%; /* Imagem ocupa toda a altura do card */
+  transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
+}
+
+.card-image-base,
+.card-image-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px; /* Arredonda todos os cantos */
+}
+
+.card-image-hover {
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
+}
+
+/* Efeito de troca de imagem no hover */
+.card:hover .card-image-hover {
+  opacity: 1;
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 1rem; /* Mais padding para o nome */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 3;
+  box-sizing: border-box;
+  /* Transição para o texto, se quisermos animá-lo no futuro */
+  transition: transform 0.35s ease-out;
+}
+
+/* Efeito de hover na imagem do card */
+.card:hover .card-image-container {
+  transform: scale(1.05) translateX(15px); /* Ressalta e desliza a imagem para a direita */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Adiciona uma sombra para dar profundidade */
+  z-index: 5; /* Garante que a imagem fique sobre o conteúdo do próprio card */
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem; /* Título ligeiramente menor */
+  color: #fff; /* Cor do título alterada para branco */
+}
+
+/* ===== Seção de Serviços Premium ===== */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%; /* Garante que os cards na mesma linha tenham a mesma altura */
+  box-sizing: border-box; /* Garante que o padding não afete a altura total */
+}
+
+.service-card:hover {
+  transform: scale(1.02) translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.service-card-icon-wrapper {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: #e6f0ff; /* Cor de fundo do círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.service-card-icon-wrapper img {
+  height: 100px; /* Tamanho do GIF dentro do círculo */
+  width: auto;
+}
+
+.service-card-title {
+  font-size: 1.4rem;
+  color: #003366;
+  margin-bottom: 0.75rem;
+}
+
+.service-card-desc {
+  font-size: 0.9rem;
+  color: #555;
+  flex-grow: 1; /* Faz a descrição ocupar o espaço disponível, alinhando os botões */
+  margin-bottom: 1.5rem;
+}
+
+.service-card-button {
+  background-color: #003366;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 400;
+  transition: background-color 0.3s ease;
+}
+
+.service-card-button:hover {
+  background-color: #0055a4;
+}
+
+/* ===== API - Depoimentos ===== */
+.review-section-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.review-carousel-container {
+  position: relative;
+  max-width: 820px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.review-carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.review-slide {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem; /* Espaçamento para não colar nos botões */
+  overflow: hidden; /* Garante que a sombra do card não seja cortada */
+}
+
+.review-image-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: -50px; /* Puxa a imagem para cima do card */
+  z-index: 2;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.review-card {
+  background: #ffffff;
+  padding: 70px 30px 30px 30px; /* Padding superior maior para a imagem */
+  border-radius: 24px; /* Bordas mais arredondadas */
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Sombra sutil no card */
+  min-height: 250px; /* Removida a borda para um visual mais limpo */
+}
+
+.review-stars {
+  color: #ffc107; /* Cor de estrela (dourado) */
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.review-nav-button {
+  background-color: transparent; /* Remove o fundo do botão */
+  border: none; /* Remove a borda */
+  font-size: 3rem; /* Aumenta o tamanho da seta */
+  font-weight: 500;
+  color: #003366;
+  cursor: pointer;
+  transition: color 0.3s ease; /* Transição suave apenas na cor */
+  padding: 0 2rem; /* Espaçamento lateral ajustado */
+}
+
+.review-nav-button:hover {
+  color: #0055a4; /* Escurece a seta no hover */
+  background-color: transparent; /* Garante que o fundo não mude */
+}
+
+/* Remove qualquer efeito visual ao clicar no botão */
+.review-nav-button:active {
+  transform: none; /* Garante que não haja efeito de "pressionar" */
+  color: #0055a4; /* Mantém a cor do hover durante o clique */
+}
+
+/* ================== NOVO FOOTER ================== */
+
+:root {
+  --footer-bg: #002244; /* Cor de fundo principal */
+  --footer-text: #ccc; /* Cor do texto geral */
+  --footer-title: #ffffff; /* Cor dos títulos das colunas */
+  --footer-link-hover: #ffffff; /* Cor do link ao passar o mouse */
+  --footer-border: #003366; /* Cor da borda e separadores */
+}
+
+.site-footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 4rem 2rem 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-column h4 {
+  color: var(--footer-title);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-column ul a {
+  color: var(--footer-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul a:hover {
+  color: var(--footer-link-hover);
+}
+
+.footer-company-info .footer-logo img {
+  height: 100px;
+  margin-bottom: 1rem;
+}
+
+.footer-cnpj {
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--footer-border);
+  border-radius: 50%;
+  color: var(--footer-text);
+  text-decoration: none;
+  font-size: 1.4rem; /* Controla o tamanho dos ícones */
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  background-color: var(--footer-border);
+  color: var(--footer-title);
+}
+
+.footer-contact p {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-contact-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--footer-text);
+  text-decoration: none;
+  border: 1px solid var(--footer-border);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--footer-border);
+  font-size: 0.8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-bottom a {
+  color: var(--footer-text);
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  color: var(--footer-link-hover);
+}
+
+/* ===== Media Queries ===== */
+
+/* Telas pequenas (Mobile) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .footer-main {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav {
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+  }
+
+  .footer-company-info,
+  .social-icons {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hero {
+    height: 50vh;
+    padding: 0 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .block-section {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Ajuste para o texto do link no header que estava branco em fundo branco */
+.header nav a {
+  color: #003366;
+  font-weight: 450;
+  font-style: normal;
+}
+
+.header nav a:hover {
+  color: #0055a4;
+}
+
+.img-section {
+  height: 45em;
+  position: relative; /* Necessário para posicionar a nova imagem por cima */
+  overflow: hidden; /* Esconde a nova imagem antes dela deslizar para dentro */
+}
+
+.dark-image {
+  filter: brightness(75%) blur(2.5px);
+  width: 100%;
+  height: 100%; /* Garante que a imagem ocupe toda a altura do container */
+  object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+  object-position: center; /* Centraliza a imagem vertical e horizontalmente */
+}
+
+/* Estilos para a nova imagem que vai deslizar */
+.slide-in-image {
+  position: absolute;
+  bottom: 0;
+  left: 0; /* Alinha a imagem à esquerda do contêiner */
+  width: auto;
+  height: 90%;
+  object-fit: contain;
+  z-index: 2;
+
+  /* ESTADO INICIAL: Invisível e deslocada para a esquerda, fora da tela. */
+  /* O JavaScript agora controla a opacidade e a transformação. */
+  opacity: 0;
+  transform: translateX(-100px);
+  /* Define a duração e o estilo da animação de transição. */
+  transition: opacity 0.6s ease-out,
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Curva de aceleração suave */
+}
+
+/* ESTADO FINAL: Classe adicionada pelo JavaScript quando o elemento está visível. */
+.slide-in-image.visible {
+  opacity: 1; /* Torna a imagem totalmente visível. */
+  transform: translateX(0); /* Move a imagem para sua posição final (0px). */
+}
+
+/* ===== Estilos Específicos para a Frota ===== */
+.fleet-grid {
+  display: flex; /* Remove o layout de grid */
+  justify-content: center; /* Centraliza os cards horizontalmente */
+  align-items: center; /* Centraliza os cards verticalmente */
+  gap: 18px; /* Espaçamento entre os cards */
+  width: 88vw;
+  height: 55vh;
+  margin: 0 auto; /* Centraliza o container na seção */
+}
+
+/*
+  A classe .fleet-card deve ser adicionada ao elemento principal
+  dentro do seu componente FleetCard.jsx
+*/
+.fleet-grid .fleet-card {
+  flex-basis: 409px; /* Largura aumentada */
+  display: flex; /* Mantém o display flex */
+  flex-direction: column; /* Organiza os itens (imagem e conteúdo) em coluna */
+  height: 380px; /* Altura diminuída */
+}
+
+/* Estilos para a lista de características dentro do card da frota */
+.fleet-features-list {
+  padding: 0; /* Remove o recuo da lista */
+  margin-top: 0.5rem; /* Reduz o espaço acima da lista */
+  font-size: 0.85rem; /* Fonte das características menor */
+  color: #555; /* Cor do texto ajustada para cinza escuro */
+  list-style: none; /* Remove os marcadores de lista */
+  display: flex; /* Ativa o layout flexível */
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+  gap: 0 1rem; /* Espaçamento entre os itens (vertical e horizontal) */
+}
+
+.fleet-features-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.feature-icon {
+  margin-right: 0.75rem;
+  color: #003366; /* Cor do ícone ajustada para o azul padrão */
+  font-size: 1.2rem;
+}
+
+/* ===== Seção Nosso Dever ===== */
+.duty-section {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza o conteúdo */
+  gap: 5rem; /* Aumenta o espaçamento entre texto e imagem */
+}
+
+.duty-content {
+  flex: 1; /* Permite que o conteúdo de texto ocupe o espaço necessário */
+  max-width: 50%; /* Limita a largura do texto a 50% */
+}
+
+.duty-content p {
+  font-weight: 400;
+  font-style: normal;
+  text-align: center; /* Alinha o parágrafo à direita */
+}
+
+.duty-title {
+  text-align: center; /* Alinha o título da seção à direita */
+  padding-bottom: 1rem; /* Reduz o espaçamento inferior do título */
+  margin-bottom: 1rem;
+}
+
+.duty-carousel-container {
+  flex-shrink: 0;
+  width: 45%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.37);
+}
+
+.duty-carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.duty-carousel-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #ffffff;
+}
+
+.duty-image {
+  width: 100%;
+  height: auto;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Cor de fundo para seções de Frota e Depoimentos */
+.fleet-section,
+.reviews-section {
+  background-color: #a6948a41; /* Fundo branco para destacar o conteúdo */
+}
+
+/* Remove a margem inferior da seção de depoimentos para aproximá-la do rodapé */
+.reviews-section {
+  margin-bottom: -40px;
+  padding-bottom: 150px;
+}
+
+/* ===== Ícone Flutuante do WhatsApp ===== */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+/* ===== Página Sobre Nós ===== */
+.sobre-nos-container {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sobre-nos-hero {
+  position: relative;
+  height: 50vh;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sobre-nos-hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.sobre-nos-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 34, 68, 0.6);
+  z-index: -1;
+}
+
+.sobre-nos-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff; /* Garante que o H1 seja branco */
+}
+
+.sobre-nos-content {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.sobre-nos-content ul {
+  list-style: none;
+  padding-left: 0;
+}
