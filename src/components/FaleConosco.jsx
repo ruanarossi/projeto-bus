@@ -12,7 +12,7 @@ export default function FaleConosco() {
           e.preventDefault();
           setOpen(true);
         }}
-        className="nav-link-button"
+        className="fale-conosco-button" /* Classe alterada para estilização */
       >
         Fale Conosco
       </a>
@@ -69,7 +69,7 @@ export default function FaleConosco() {
               <strong>E-mail:</strong> atendimento@auroratransportes.com
             </p>
             <p>
-              <strong>Endereço:</strong> Rodovia KM 116 — Pátio Operacional
+              <strong>Endereço:</strong> Av. Salgado Filho — Pátio Operacional
               Aurora Transportes
             </p>
             <p>

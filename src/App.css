@@ -19,12 +19,46 @@ img {
   display: block;
 }
 
+/* ===== Top Bar (Acima do Header) ===== */
+.top-bar {
+  background-color: #f4f4f4; /* Cor de fundo sutil, pode ser a mesma do body */
+  padding: 0.3rem 4rem;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.top-bar-content {
+  display: flex;
+  justify-content: flex-end; /* Alinha o conteúdo à direita */
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.social-icons-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icons-header a {
+  color: rgb(102, 100, 100); /* Cor mais sutil para os ícones */
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.social-icons-header a:hover {
+  color: #0055a4; /* Cor de destaque no hover */
+}
+
+/* Ajuste para o header ficar abaixo da top-bar */
+
 /* ===== Header ===== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 4rem;
   height: 70px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
@@ -34,7 +68,7 @@ img {
 }
 
 .header img {
-  height: 130px;
+  height: 135px;
 }
 
 .logo-container {
@@ -50,7 +84,7 @@ img {
 
 nav {
   display: flex;
-  gap: 2rem; /* Reduzido para aproximar os itens do menu */
+  gap: 3rem; /* Reduzido para aproximar os itens do menu */
 }
 
 nav a {
@@ -90,7 +124,7 @@ nav a {
   top: 50%;
   left: 50%;
   width: 100%;
-  height: 100%;
+  height: 130%;
   object-fit: inherit;
   transform: translate(-50%, -50%);
   z-index: 0;
@@ -121,7 +155,7 @@ nav a {
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 45px;
   color: #003366;
 }
 
@@ -152,7 +186,7 @@ h2 {
   position: relative;
   /* flex-grow: 1; */ /* Removido para dar espaço ao conteúdo */
   height: 100%; /* Imagem ocupa toda a altura do card */
-  transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
+  transition: transform 1.1s ease-out, box-shadow 0.35s ease-out;
 }
 
 .card-image-base,
@@ -191,7 +225,7 @@ h2 {
 
 /* Efeito de hover na imagem do card */
 .card:hover .card-image-container {
-  transform: scale(1.05) translateX(15px); /* Ressalta e desliza a imagem para a direita */
+  transform: scale(1.05); /* Ressalta a imagem sem deslizá-la */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Adiciona uma sombra para dar profundidade */
   z-index: 5; /* Garante que a imagem fique sobre o conteúdo do próprio card */
 }
@@ -427,15 +461,16 @@ h2 {
   height: 40px;
   border: 1px solid var(--footer-border);
   border-radius: 50%;
-  color: var(--footer-text);
+  color: var(--footer-border);
+  background-color: white;
   text-decoration: none;
-  font-size: 1.4rem; /* Controla o tamanho dos ícones */
+  font-size: 1.8rem; /* Controla o tamanho dos ícones */
   transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
   background-color: var(--footer-border);
-  color: var(--footer-title);
+  color: white;
 }
 
 .footer-contact p {
@@ -545,7 +580,7 @@ h2 {
 
 .img-section {
   height: 45em;
-  position: relative; /* Necessário para posicionar a nova imagem por cima */
+  position: relative;
   overflow: hidden; /* Esconde a nova imagem antes dela deslizar para dentro */
 }
 
@@ -560,27 +595,20 @@ h2 {
 /* Estilos para a nova imagem que vai deslizar */
 .slide-in-image {
   position: absolute;
-  bottom: 0;
-  left: 0; /* Alinha a imagem à esquerda do contêiner */
-  width: auto;
+  bottom: -30px;
+  left: -171px; /* Alinha a imagem à esquerda do contêiner */
+  width: 51%; /* Ajuste a largura conforme necessário */
   height: 90%;
   object-fit: contain;
   z-index: 2;
 
-  /* ESTADO INICIAL: Invisível e deslocada para a esquerda, fora da tela. */
-  /* O JavaScript agora controla a opacidade e a transformação. */
-  opacity: 0;
-  transform: translateX(-100px);
-  /* Define a duração e o estilo da animação de transição. */
-  transition: opacity 0.6s ease-out,
-    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Curva de aceleração suave */
+  /* O estado inicial agora é controlado diretamente pelo JavaScript */
+  transform: translateX(100px); /* Posição inicial fora da tela */
+  opacity: 1; /* Garante que a imagem esteja sempre visível */
+  /* A transição de opacidade foi removida */
 }
 
-/* ESTADO FINAL: Classe adicionada pelo JavaScript quando o elemento está visível. */
-.slide-in-image.visible {
-  opacity: 1; /* Torna a imagem totalmente visível. */
-  transform: translateX(0); /* Move a imagem para sua posição final (0px). */
-}
+/* A classe .visible não é mais necessária, pois o JS controla o transform diretamente */
 
 /* ===== Estilos Específicos para a Frota ===== */
 .fleet-grid {
@@ -653,57 +681,14 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.duty-carousel-container {
-  flex-shrink: 0;
-  width: 45%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.37);
-}
-
-.duty-carousel-wrapper {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.duty-carousel-dots {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.dot.active {
-  background-color: #ffffff;
-}
-
-.duty-image {
-  width: 100%;
-  height: auto;
-  flex-shrink: 0;
-  object-fit: cover;
-}
-
-/* Cor de fundo para seções de Frota e Depoimentos */
-.fleet-section,
-.reviews-section {
-  background-color: #a6948a41; /* Fundo branco para destacar o conteúdo */
+/* Cor de fundo para a seção de Frota */
+.fleet-section {
+  background-color: #a6948a2c; /* Fundo branco para destacar o conteúdo */
 }
 
 /* Remove a margem inferior da seção de depoimentos para aproximá-la do rodapé */
 .reviews-section {
+  background-color: #e6f0ff; /* Fundo azul claro para a seção de depoimentos */
   margin-bottom: -40px;
   padding-bottom: 150px;
 }
@@ -736,6 +721,7 @@ h2 {
 /* ===== Página Sobre Nós ===== */
 .sobre-nos-container {
   animation: fadeIn 0.5s ease-in-out;
+  background-color: #a6948a2c; /* Fundo branco para destacar o conteúdo */
 }
 
 @keyframes fadeIn {
@@ -749,7 +735,7 @@ h2 {
 
 .sobre-nos-hero {
   position: relative;
-  height: 50vh;
+  height: 45vh;
   color: #fff;
   display: flex;
   align-items: center;
@@ -764,7 +750,7 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2;
+  z-index: 1; /* Camada base */
 }
 
 .sobre-nos-hero-overlay {
@@ -773,14 +759,15 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 34, 68, 0.6);
-  z-index: -1;
+  background-color: rgba(0, 34, 68, 0.3); /* Opacidade reduzida para 30% */
+  z-index: 2; /* Sobreposição acima da imagem */
 }
 
 .sobre-nos-hero h1 {
   font-size: 3rem;
   font-weight: 700;
   color: #fff; /* Garante que o H1 seja branco */
+  z-index: 3; /* Título acima de tudo */
 }
 
 .sobre-nos-content {
@@ -795,4 +782,323 @@ h2 {
 .sobre-nos-content ul {
   list-style: none;
   padding-left: 0;
+  line-height: 1.7;
+}
+
+/* Bloco 1: Sobre Nós com Vídeo */
+.sobre-nos-intro-section {
+  display: flex;
+  align-items: center;
+  gap: 4rem; /* Aumentado para empurrar o vídeo mais para a direita */
+  max-width: 1100px;
+  margin: 5rem auto;
+  padding: 0 2rem;
+}
+
+.sobre-nos-intro-content {
+  flex: 1;
+}
+
+.sobre-nos-intro-content h2 {
+  text-align: left;
+  font-size: 32px;
+}
+
+.sobre-nos-intro-media {
+  flex: 1;
+  max-width: 600px; /* Aumentado novamente para maior destaque */
+  height: 300px; /* Define uma altura fixa para o contêiner do vídeo */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sobre-nos-intro-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bloco 2: Diferenciais */
+.diferenciais-section {
+  padding: 4rem 2rem;
+  background-color: #fff;
+}
+
+.diferenciais-section h2 {
+  font-size: 32px;
+  margin-bottom: 3rem;
+}
+
+.diferenciais-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.diferencial-card {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.diferencial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.diferencial-card svg {
+  font-size: 32px;
+  color: #0055a4;
+  margin-bottom: 1rem;
+}
+
+.diferencial-card h3 {
+  font-size: 1.2rem;
+  color: #003366;
+  margin-bottom: 0.5rem;
+}
+
+.diferencial-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Bloco 3: Nossos Números */
+.numeros-section {
+  background-color: #e6f0ff;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.numeros-section h2 {
+  font-size: 32px;
+  margin-bottom: 3rem;
+}
+
+.numeros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.numero-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.numero-item svg {
+  font-size: 28px;
+  color: #0055a4;
+  margin-bottom: 0.5rem;
+}
+
+.numero-grande {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+.numero-item span:last-child {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Media Query para o bloco de introdução */
+@media (max-width: 900px) {
+  .sobre-nos-intro-section {
+    flex-direction: column;
+  }
+}
+
+/* Nova seção: Onde Nos Encontrar */
+.onde-encontrar-section {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os blocos quebrem a linha em telas menores */
+  align-items: flex-start; /* Alinha o conteúdo ao topo */
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 5rem auto;
+  padding: 0 2rem;
+}
+
+.onde-encontrar-section h2 {
+  text-align: left;
+  font-size: 32px;
+  margin: 0;
+}
+
+.onde-encontrar-content {
+  flex: 1;
+  min-width: 300px; /* Garante que o bloco de texto não fique muito pequeno */
+}
+
+.onde-encontrar-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+.onde-encontrar-content strong {
+  color: #003366;
+}
+
+.onde-encontrar-map-container {
+  flex: 1;
+  min-width: 400px; /* Garante que o mapa não fique muito pequeno */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.onde-encontrar-map-container iframe {
+  border-radius: 12px; /* Arredonda as bordas do iframe */
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: #0055a4;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.map-link:hover {
+  background-color: #003366;
+  transform: translateY(-2px);
+}
+
+/* Media Query para telas menores */
+@media (max-width: 768px) {
+  .onde-encontrar-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .onde-encontrar-content h2 {
+    text-align: center;
+  }
+
+  .onde-encontrar-content,
+  .onde-encontrar-map-container {
+    min-width: unset; /* Remove a largura mínima para se ajustar melhor */
+    width: 100%;
+  }
+}
+
+/* Estilo para o botão "Fale Conosco" se parecer com um link do menu */
+.nav-link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: #003366;
+  font-weight: 450;
+  font-style: normal;
+  text-decoration: none;
+}
+
+/* Estilo para o botão "Fale Conosco" destacado */
+.fale-conosco-button {
+  background-color: #0055a4; /* Fundo azul */
+  color: #ffffff !important; /* Texto branco com prioridade */
+  padding: 0.3rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 450 !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: -5px;
+}
+
+.fale-conosco-button:hover {
+  background-color: #003366; /* Azul mais escuro no hover */
+  color: #fff; /* Garante que o texto permaneça branco */
+  transform: translateY(-2px);
+}
+
+/* Estilos para o mapa na página de Destinos */
+.mapa-wrapper {
+  margin: 3rem 0;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.mapa-wrapper .rsm-marker:hover {
+  cursor: pointer;
+}
+
+/* ===== Novo Mapa com Imagem e Botões ===== */
+.mapa-imagem-container {
+  position: relative; /* Essencial para posicionar os botões filhos */
+  width: 100%;
+  max-width: 600px; /* Limita a largura máxima do mapa */
+  margin: 2rem auto; /* Centraliza o mapa */
+}
+
+.mapa-imagem-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mapa-ponto {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: #0055a4;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%); /* Centraliza o ponto na coordenada exata */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  padding: 0;
+}
+
+.mapa-ponto:hover {
+  transform: translate(-50%, -50%) scale(1.2); /* Aumenta o ponto no hover */
+  background-color: #003366;
+}
+
+.mapa-ponto-label {
+  position: absolute;
+  bottom: 120%; /* Posiciona o texto acima do ponto */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(
+    0,
+    51,
+    102,
+    0.9
+  ); /* Fundo azul escuro semi-transparente */
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap; /* Impede que o nome quebre a linha */
+  opacity: 0; /* Esconde o label por padrão */
+  transition: opacity 0.2s ease;
+}
+
+.mapa-ponto:hover .mapa-ponto-label {
+  opacity: 1; /* Mostra o label no hover */
 }

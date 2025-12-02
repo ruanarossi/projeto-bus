@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import FleetCard from "../components/FleetCard";
-import ServiceCard from "../components/ServiceCard";
-import fleet from "../data/fleet";
-import services from "../data/services";
-import initialReviews from "../data/reviews";
+import Header from "./components/Header";
+import TopBar from "./components/TopBar"; // Importa a nova TopBar
+import FleetCard from "./components/FleetCard";
+import fleet from "./data/fleet";
+import services from "./data/services";
+import initialReviews from "./data/reviews";
+import ServiceModal from "./components/ServiceModal";
+import FleetModal from "./components/FleetModal";
+import ServiceCard from "./components/ServiceCard2"; // Mantido
+import Footer from "./components/Footer"; // Importa o Footer correto
+
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Home() {
   const [reviews] = useState(initialReviews);
   const [currentReview, setCurrentReview] = useState(0);
+  const [selectedService, setSelectedService] = useState(null);
+  const [selectedFleet, setSelectedFleet] = useState(null);
 
-  // Estado e imagens para o carrossel da seção "Nosso Dever"
-  const dutyImages = [
-    "/imagens/nosso-dever.png",
-    "/imagens/interior.png", // Exemplo de outra imagem
-    "/imagens/passageiros.png", // Exemplo de outra imagem
-  ];
-  const [currentDutyImage, setCurrentDutyImage] = useState(0);
   const handleNextReview = () => {
     setCurrentReview((prev) => (prev + 1) % reviews.length);
   };
@@ -23,53 +25,50 @@ export default function Home() {
     setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
 
-  // Função para navegar no carrossel "Nosso Dever" pelos pontos
-  const handleDutyDotClick = (index) => {
-    setCurrentDutyImage(index);
-  };
-
   // Lógica para a animação de scroll
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // Pega a porcentagem de visibilidade do elemento (de 0.0 a 1.0)
-          const ratio = entry.intersectionRatio;
+    const image = document.querySelector(".slide-in-image");
+    if (!image) return;
 
-          // Calcula a posição X: começa em -100% e vai até 0%
-          const translateX = -100 + ratio * 100;
+    let currentX = 350; // Posição inicial (fora da tela, à direita)
+    let targetX = 350; // Posição alvo inicial
 
-          // A opacidade vai de 0 a 1 conforme a imagem aparece
-          const opacity = ratio;
+    const handleScroll = () => {
+      const section = document.querySelector(".img-section");
+      if (section) {
+        const { top, height } = section.getBoundingClientRect();
+        const scrollProgress = -top / (height - window.innerHeight);
+        const progress = Math.max(0, Math.min(1, scrollProgress));
 
-          // Aplica os estilos diretamente no elemento
-          entry.target.style.opacity = opacity;
-          entry.target.style.transform = `translateX(${translateX}%)`;
-        });
-      },
-      {
-        // Cria múltiplos "gatilhos" para a animação ser suave durante o scroll
-        threshold: Array.from({ length: 101 }, (_, i) => i / 100),
+        // Define a posição alvo com base no scroll (movimento da direita para a esquerda)
+        targetX = 350 - progress * 500;
       }
-    );
+    };
 
-    const animatedElements = document.querySelectorAll(".slide-in-image");
-    animatedElements.forEach((el) => observer.observe(el));
+    window.addEventListener("scroll", handleScroll);
 
-    return () => observer.disconnect(); // Limpa o observer ao desmontar o componente
-  }, []);
+    // Loop de animação para suavizar o movimento
+    const animate = () => {
+      // Interpola a posição atual em direção à posição alvo
+      currentX += (targetX - currentX) * 0.1; // O valor 0.08 controla a suavidade
 
-  // Efeito para troca automática de imagens na seção "Nosso Dever"
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentDutyImage((prevIndex) => (prevIndex + 1) % dutyImages.length);
-    }, 4000); // Troca a imagem a cada 4 segundos
+      image.style.transform = `translateX(${currentX}px)`;
+      requestAnimationFrame(animate); // Continua o loop de animação
+    };
 
-    return () => clearInterval(timer); // Limpa o timer ao desmontar
+    const animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animationFrameId); // Limpa o loop de animação
+    };
   }, []);
 
   return (
     <>
+      <TopBar />
+      <Header logoSrc="/imagens/logo-png.png" />
+
       <section id="home" className="hero">
         <video
           autoPlay
@@ -78,7 +77,7 @@ export default function Home() {
           className="hero-video"
           key="/imagens/video.mp4"
         >
-          <source src="/imagens/video.mp4" type="video/mp4" />
+          <source src="/imagens/video-hero.mp4" type="video/mp4" />
           Seu navegador não suporta o elemento de vídeo.
         </video>
         <h1>Aurora Transportes</h1>
@@ -89,18 +88,26 @@ export default function Home() {
         <h2>Nossos Serviços</h2>
         <div className="grid">
           {services.map((service) => (
-            <ServiceCard key={service.id} data={service} />
+            <ServiceCard
+              key={service.id}
+              data={service}
+              onSaibaMaisClick={() => setSelectedService(service)}
+            />
           ))}
         </div>
       </section>
 
       <section className="img-section">
-        {/* Imagem de fundo desfocada (não será alterada) */}
-        <img src="/imagens/entrada.png" alt="" className="dark-image" />
-        {/* Nova imagem PNG que vai deslizar por cima */}
+        {/* Imagem de fundo escura */}
         <img
-          src="/imagens/img1.png" /* Caminho corrigido para absoluto */
-          alt="Ônibus Aurora"
+          src="/imagens/entrada.png"
+          alt="Estrada vista de dentro de um ônibus"
+          className="dark-image"
+        />
+        {/* Imagem que vai deslizar por cima */}
+        <img
+          src="/imagens/bus-png.png"
+          alt="Ônibus Double Decker da Aurora"
           className="slide-in-image"
         />
       </section>
@@ -109,45 +116,63 @@ export default function Home() {
         <h2>Frota</h2>
         <div className="grid fleet-grid">
           {fleet.map((item) => (
-            <FleetCard key={item.id} data={item} />
+            <FleetCard
+              key={item.id}
+              data={item}
+              onCardClick={() => setSelectedFleet(item)}
+            />
           ))}
         </div>
       </section>
 
-      <section id="nosso-dever" className="block-section duty-section">
-        <div className="duty-content">
-          <h2 className="duty-title">Nosso Dever</h2>
+      {/* Nova seção: Onde Nos Encontrar */}
+      <section
+        id="onde-nos-encontrar"
+        className="block-section onde-encontrar-section"
+      >
+        <div className="onde-encontrar-content">
+          <h2>Onde Nos Encontrar</h2>
           <p>
-            Nosso compromisso é com a sua segurança e conforto. Viaje conosco e
-            tenha a certeza de um transporte de qualidade, com pontualidade e
-            uma equipe dedicada a oferecer a melhor experiência em cada trajeto.
-            A sua tranquilidade é a nossa prioridade.
+            Estamos localizados em um ponto estratégico para melhor atendê-lo.
+            Venha nos visitar ou entre em contato pelos nossos canais.
           </p>
-        </div>
-        {/* Carrossel de imagens */}
-        <div className="duty-carousel-container">
-          <div
-            className="duty-carousel-wrapper"
-            style={{ transform: `translateX(-${currentDutyImage * 100}%)` }}
+          <p>
+            <strong>Endereço:</strong> Av. Salgado Filho — Pátio Operacional
+            Aurora Transportes
+          </p>
+          <p>
+            <strong>Horário de Atendimento:</strong> Segunda a Sexta, das 08h às
+            18h
+          </p>
+          <p>
+            <strong>Telefone/WhatsApp:</strong> (22) 99554-1264
+          </p>
+          <p>
+            <strong>E-mail:</strong> atendimento@auroratransportes.com
+          </p>
+
+          <a
+            href="https://maps.app.goo.gl/aizdV9kc7fvXDfH3A"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="map-link"
           >
-            {dutyImages.map((src, index) => (
-              <img
-                key={index}
-                src={src}
-                alt={`Imagem ${index + 1} do compromisso da Aurora`}
-                className="duty-image"
-              />
-            ))}
-          </div>
-          <div className="duty-carousel-dots">
-            {dutyImages.map((_, index) => (
-              <span
-                key={index}
-                className={index === currentDutyImage ? "dot active" : "dot"}
-                onClick={() => handleDutyDotClick(index)}
-              ></span>
-            ))}
-          </div>
+            Ver no mapa
+          </a>
+        </div>
+        <div className="onde-encontrar-map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12310.632525288725!2d-46.54025815958724!3d-23.461440293414604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cef54397139dd9%3A0x7cc21d3799600f22!2sAv.%20Salgado%20Filho%2C%20323%20-%20Centro%2C%20Guarulhos%20-%20SP%2C%2007115-000!5e0!3m2!1spt-BR!2sbr!4v1764623767918!5m2!1spt-BR!2sbr"
+            allowfullscreen=""
+            referrerpolicy="no-referrer-when-downgrade"
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Localização da Aurora Transportes"
+          ></iframe>
         </div>
       </section>
 
@@ -194,6 +219,27 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      <Footer />
+
+      <a
+        href="https://wa.me/5511999999999" // Substitua pelo seu número de telefone
+        className="whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <FaWhatsapp />
+      </a>
+
+      <ServiceModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
+      />
+
+      <FleetModal
+        fleetItem={selectedFleet}
+        onClose={() => setSelectedFleet(null)}
+      />
     </>
   );
 }
