@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FaleConosco from "./FaleConosco";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header({ logoSrc }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   const handleHomeClick = (e) => {
     e.preventDefault();
@@ -14,6 +20,7 @@ export default function Header({ logoSrc }) {
       // Se estiver em outra página, navega para a inicial
       navigate("/");
     }
+    closeMenu();
   };
 
   return (
@@ -25,15 +32,26 @@ export default function Header({ logoSrc }) {
           className="logo"
         />
       </a>
-      <nav>
+      <button className="hamburger-menu" onClick={toggleMenu}>
+        {isMenuOpen ? <FaTimes /> : <FaBars />}
+      </button>
+      <nav className={isMenuOpen ? "main-nav open" : "main-nav"}>
         <a href="/" onClick={handleHomeClick}>
           Home
         </a>
-        <Link to="/sobre-nos">Quem Somos</Link>
-        <a href="/#servicos">Serviços</a>
-        <a href="/#frota">Frota</a>
-        <Link to="/destinos">Nossos Destinos</Link>
-        <FaleConosco />
+        <Link to="/sobre-nos" onClick={closeMenu}>
+          Quem Somos
+        </Link>
+        <a href="/#servicos" onClick={closeMenu}>
+          Serviços
+        </a>
+        <a href="/#frota" onClick={closeMenu}>
+          Frota
+        </a>
+        <Link to="/destinos" onClick={closeMenu}>
+          Nossos Destinos
+        </Link>
+        <FaleConosco onClick={closeMenu} />
       </nav>
     </header>
   );

@@ -516,22 +516,9 @@ h2 {
 
 /* Telas pequenas (Mobile) */
 @media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    height: auto;
-    padding: 1rem;
-  }
-
   .footer-main {
     flex-direction: column;
     text-align: center;
-  }
-
-  nav {
-    margin-top: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 1rem;
   }
 
   .footer-company-info,

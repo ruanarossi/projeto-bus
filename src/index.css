@@ -62,3 +62,80 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* === Estilos do Header === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #242424;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo {
+  height: 50px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  color: rgba(255, 255, 255, 0.87);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.main-nav a:hover {
+  color: #535bf2;
+}
+
+.hamburger-menu {
+  display: none;
+  background: none;
+  border: none;
+  color: #213547;
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 1100; /* Acima da navegação */
+}
+
+/* === Media Query para Responsividade === */
+@media (max-width: 850px) {
+  .main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #e6f0ff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1050; /* Garante que o menu fique sobre o conteúdo e abaixo do botão de fechar */
+  }
+
+  .main-nav.open {
+    transform: translateX(0);
+  }
+
+  .main-nav a,
+  .main-nav .nav-link-button {
+    font-size: 1.5rem;
+    color: #213547; /* Cor escura para o texto no menu claro */
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+}
